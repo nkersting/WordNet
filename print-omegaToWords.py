@@ -10,10 +10,7 @@ import sys
 wordfile = "dictionary.txt"         # i.e. map of English words to primary synsets
 
 
-omegafile = "omega-hybrid.txt"             
-#omegafile = "omegaO2.txt"             
-#omegafile = "omegaO3.txt"             
-
+omegafile = "omegaO2.txt"             
 
 wordReader = csv.reader(open(wordfile,'rb'), delimiter=' ')
 omegaReader = csv.reader(open(omegafile,'rb'), delimiter=' ')
@@ -67,12 +64,12 @@ reversedict = make_reverse_dict(worddict)
 
 for line in sorted(omegaReader):
     print line[0] + ': ',
-    templist = []
+    templist = set()
     for i in range (1, len(line)):
         if reversedict.has_key(line[i]):
             for entry in reversedict[line[i]]:
-                templist.append(entry)
-    print uniq(templist)
+                templist.add(entry)
+    print sorted(templist)
     print
     print
 

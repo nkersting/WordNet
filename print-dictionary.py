@@ -13,6 +13,15 @@ import csv
 #  Thus, "smarting" is set to the same collection of synsets that "smart" is assigned to.
 
 
+# In NLTK this is equivalent to
+##############################################
+#import nltk 
+#from nltk.corpus import wordnet as wn
+##    
+#for syn in wn.synsets('gold'):
+#    print syn.offset
+##############################################
+
 inputfile = "tot.txt"     # should be a concatenation:  "cat adv.txt adj.txt noun.txt verb.txt > tot.txt"
 
 inputReader = csv.reader(open(inputfile,'rb'), delimiter=' ')
@@ -20,18 +29,15 @@ inputReader = csv.reader(open(inputfile,'rb'), delimiter=' ')
 words = {}
 
 
-for input in inputReader:
-    if words.has_key(input[4]):
-        words[input[4]] += ' ' + input[0]
-    else:
-        words[input[4]] = input[0]
 
 inputReader = csv.reader(open(inputfile,'rb'), delimiter=' ')
 for input in inputReader:
     numwords = int(input[3],16)     # the number of words is actually in hexadecimal
-    for i in range (1, numwords):     # iterate over number of words beyond the first
+    for i in range (0, numwords):     # iterate over number of words
         w_idx = 4 + 2*i              # this happens to be the position of the word in the line
-        if (input[w_idx] not in words): 
+        if words.has_key(input[w_idx]):
+            words[input[w_idx]] += ' ' + input[0]
+        else: 
             words[input[w_idx]] = input[0] # if the word doesn't already have synsets, mimic its base word
 
 

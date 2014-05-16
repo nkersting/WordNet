@@ -55,14 +55,14 @@ worddict = make_dict(words)
 syndict = make_dict(syns)
 
 for entry in sorted(worddict.keys()):        # loop over dictionary
-    syn_entries = []
+    syn_entries = set()
     for syn in worddict[entry]:    # synsets for this word
-        syn_entries.append(syn)     # add the primary synsets
+        syn_entries.add(syn)     # add the primary synsets
         for syn2 in syndict[syn]: 
-            syn_entries.append(syn2) # add the secondary synsets
+            syn_entries.add(syn2) # add the secondary synsets
 
     print entry,
-    for synval in sorted(uniq(syn_entries)):
+    for synval in sorted(syn_entries):
         print synval,
     print
 
